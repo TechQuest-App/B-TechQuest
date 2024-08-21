@@ -10,16 +10,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RoadMap extends Model
 {
-    protected $fillable = ['description'];
+    protected $table = 'roadmaps';
+    protected $guarded = ['id'];
     use HasFactory;
 
-    public function material(): BelongsToMany
-    {
-        return $this->belongsToMany(Material::class);
-    }
 
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function level(): HasMany
+    {
+        return $this->hasMany(Level::class, 'roadmap_id');
     }
 }

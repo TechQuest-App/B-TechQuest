@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class WishListResource extends JsonResource
+class WeekResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,8 +15,10 @@ class WishListResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'wishList-id' => $this->id,
-            'wishList-courses' => CourseResourece::collection($this->course)
+            'week-id' => $this->id,
+            'week-number' => 'week ' . $this->number,
+            'week-topics' => TopicResource::collection($this->topic),
+            'week-courses' =>    ResourcesResource::collection($this->resources),
         ];
     }
 }

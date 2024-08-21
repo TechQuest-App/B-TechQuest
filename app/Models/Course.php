@@ -56,4 +56,9 @@ class Course extends Model
     {
         return $this->belongsTo(User::class, 'mentor_id');
     }
+
+    public function resource(): HasOne
+    {
+        return $this->HasOne(Resource::class, 'course_id', 'id');
+    }
 }

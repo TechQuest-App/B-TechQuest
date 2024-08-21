@@ -36,7 +36,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             $data['token'] = $user->createToken('TechQuest')->plainTextToken;
-            $data['name'] = $user->f_name;
+            $data['name'] = $user->f_name . " " . $user->l_name;
             $data['email'] = $user->email;
             return ApiResponse::sendResponse(201,'User Logged In Successfully', $data);
         }else {
@@ -55,8 +55,10 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
         ], [],[
-            'name' => 'Name',
+            'f_name' => 'First Name',
+            'l_name' => 'Last Name',
             'email' => 'Email',
+            'phone' => 'Phone',
             'password' => 'Password',
         ]);
         if ($validator->fails()) {
@@ -72,10 +74,10 @@ class AuthController extends Controller
             'is_active' => 1
         ]);
 
-        $data['token'] = $user->createToken('TechQuest')->plainTextToken;
-        $data['f_name'] = $user->f_name;
-        $data['l_name'] = $user->l_name;
-        $data['email'] = $user->email;
+        $data['Token'] = $user->createToken('TechQuest')->plainTextToken;
+        $data['First-name'] = $user->f_name;
+        $data['Last-name'] = $user->l_name;
+        $data['Email'] = $user->email;
 
         return ApiResponse::sendResponse(201,'REGISTER SUCCESSFUL', $data);
     }

@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('weeks', function (Blueprint $table) {
+        Schema::create('resources', function (Blueprint $table) {
             $table->id();
-            $table->integer('number');
-            $table->foreignId('level_id')->constrained('levels');
+            $table->foreignId('week_id')->constrained('weeks');
+            $table->foreignId('course_id')->constrained('courses');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('weeks');
+        Schema::dropIfExists('resources');
     }
 };

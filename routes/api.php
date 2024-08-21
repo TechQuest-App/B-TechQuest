@@ -7,8 +7,13 @@ use App\Http\Controllers\Api\CertificateController;
 use App\Http\Controllers\Api\CertificateFullNameController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\LessonController;
+use App\Http\Controllers\Api\LevelController;
+use App\Http\Controllers\Api\ResourcesController;
+use App\Http\Controllers\Api\RoadmapController;
 use App\Http\Controllers\Api\SectionController;
+use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\WeekController;
 use App\Http\Controllers\Api\WishListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -39,13 +44,9 @@ Route::prefix('/courses')->controller(CourseController::class)->group(function (
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', 'store');
         Route::post('/update/{course}', 'update');
-//        Route::put('/{course}', 'update');
         Route::post('/delete/{course}', 'destroy');
     });
-//    Route::post('/', 'store')->middleware('auth:sanctum');
 });
-//Route::get('/courses/show/{id}', [CourseController::class, 'show']);
-//Route::post('/courses/store', [CourseController::class, 'store']);
 
 ## ---------------------Carts Module ------------------##
 Route::middleware('auth:sanctum')->controller(CartController::class)->group(function () {
@@ -85,4 +86,38 @@ Route::controller(LessonController::class)->middleware('auth:sanctum')->group(fu
     Route::post('/lesson', 'store');
     Route::post('/lesson/update/{lesson}', 'update');
     Route::post('/lesson/delete/{lesson}', 'destroy');
+});
+
+## ---------------------RoadMaps Module ------------------##
+Route::controller(RoadmapController::class)->middleware('auth:sanctum')->group(function () {
+    Route::post('/roadmap', 'store');
+    Route::post('/roadmap/update/{roadmap}', 'update');
+    Route::post('/roadmap/delete/{roadmap}', 'destroy');
+    Route::get('/roadmap/{id}','index');
+});
+
+Route::controller(LevelController::class)->middleware('auth:sanctum')->group(function () {
+    Route::post('/level', 'store');
+    Route::post('/level/delete/{level}', 'destroy');
+    Route::get('/level/{id}','index');
+});
+
+Route::controller(WeekController::class)->middleware('auth:sanctum')->group(function () {
+    Route::post('/week', 'store');
+    Route::post('/week/delete/{week}', 'destroy');
+    Route::get('/week/{id}','index');
+});
+
+Route::controller(TopicController::class)->middleware('auth:sanctum')->group(function () {
+    Route::post('/topic', 'store');
+    Route::post('/topic/update/{topic}', 'update');
+    Route::post('/topic/delete/{topic}', 'destroy');
+    Route::get('/topic/{Week_id}','index');
+});
+
+Route::controller(ResourcesController::class)->middleware('auth:sanctum')->group(function () {
+    Route::post('/resources', 'store');
+    Route::post('/resources/update/{resource}', 'update');
+    Route::post('/resources/delete/{resource}', 'destroy');
+    Route::get('/resources/{wee_id}','index');
 });
