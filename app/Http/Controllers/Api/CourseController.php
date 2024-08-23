@@ -16,27 +16,10 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::latest()->paginate(1);
-        if (count($courses) > 0) {
-            if ($courses->total() > $courses->perPage()) {
-                $data = [
-                  'records' => CourseResourece::collection($courses),
-                  'pagination' => [
-                      'total' => $courses->total(),
-                      'per_page' => $courses->perPage(),
-                      'current_page' => $courses->currentPage(),
-                      'links' => [
-                          'first' => $courses->url(1),
-                          'last' => $courses->url($courses->lastPage()),
-                          'prev' => $courses->url($courses->previousPageUrl()),
-                          'next' => $courses->url($courses->nextPageUrl()),
-                      ]
-                  ]
-                ];
-            } else {
-                $data = CourseResourece::collection($courses);
-            }
-            return ApiResponse::sendResponse(200, 'Courses retrieved successfully.', $data);
+        $courses = Course::get();
+        if($courses){
+
+            return ApiResponse::sendResponse(200, 'Courses retrieved successfully.', CourseResourece::collection($courses));
         }
         return ApiResponse::sendResponse(200, 'Courses not found.',[]);
     }
@@ -75,34 +58,16 @@ class CourseController extends Controller
             return ApiResponse::sendResponse(403, 'you aren\'t authorized to perform this action.', []);
         }
         $data = $request->validated();
-        $updated = $course->update($data); // see create record
+        $updated = $course->update($data);
         if ($updated)
             return ApiResponse::sendResponse(201,'Course updated successfully.',new CourseResourece($course));
     }
 
     public function category($category_id)
     {
-        $courses = Course::where('category_id' , $category_id)->latest()->paginate(1);
+        $courses = Course::where('category_id' , $category_id)->get;
         if ($courses) {
-            if ($courses->total() > $courses->perPage()) {
-                $data = [
-                    'records' => CourseResourece::collection($courses),
-                    'pagination' => [
-                        'current_page' => $courses->currentPage(),
-                        'per_page' => $courses->perPage(),
-                        'total' => $courses->total(),
-                        'links' => [
-                            'first' => $courses->url(1),
-                            'last' => $courses->url($courses->lastPage()),
-                            'prev' => $courses->url($courses->previousPageUrl())?? null,
-                            'next' => $courses->url($courses->nextPageUrl())?? null,
-                        ]
-                    ]
-                ];
-            } else {
-                $data = CourseResourece::collection($courses);
-            }
-            return ApiResponse::sendResponse(200, 'Courses retrieved successfully.', $data);
+            return ApiResponse::sendResponse(200, 'Courses retrieved successfully.', CourseResourece::collection($courses));
         }
         return ApiResponse::sendResponse(200, 'course not found', []);
     }
@@ -117,28 +82,6 @@ class CourseController extends Controller
              return ApiResponse::sendResponse(200, 'Courses retrieved successfully.', CourseResourece::collection($courses));
          }
          return ApiResponse::sendResponse(200, 'No Matching Data', []);
-//         if (count($courses) > 0) {
-//             if ($courses->total() > $courses->perPage()) {
-//                 $search = [
-//                     'records' => CourseResourece::collection($courses),
-//                     'pagination' => [
-//                         'total' => $courses->total(),
-//                         'per_page' => $courses->perPage(),
-//                         'current_page' => $courses->currentPage(),
-//                         'links' => [
-//                             'first' => $courses->url(1),
-//                             'last' => $courses->url($courses->lastPage()),
-//                             'prev' => $courses->url($courses->previousPageUrl()) ?? null,
-//                             'next' => $courses->url($courses->nextPageUrl()) ?? null,
-//                         ]
-//                     ]
-//                 ];
-//             } else {
-//                 $search = CourseResourece::collection($courses);
-//             }
-//            return ApiResponse::sendResponse(200, 'Courses retrieved successfully.', $search);
-//         }
-//         return ApiResponse::sendResponse(200, 'course not found', []);
     }
     /**
      * Remove the specified resource from storage.

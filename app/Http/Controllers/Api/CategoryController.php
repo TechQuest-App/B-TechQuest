@@ -18,10 +18,5 @@ class CategoryController extends Controller
             return ApiResponse::sendResponse(200,'category retrieved successfully', CategoryResource::collection($categories));
         return ApiResponse::sendResponse(200,'category not found',[]);
 
-        //getting one record
-//        $category = Category::find(33);
-//        if ($category)
-//            return ApiResponse::sendResponse(200,'category retrieved successfully',new CategoryResource($category));
-//        return ApiResponse::sendResponse(200,'category not found',[]);
     }
 }

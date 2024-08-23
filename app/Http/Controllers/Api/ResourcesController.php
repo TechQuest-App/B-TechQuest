@@ -23,8 +23,6 @@ class ResourcesController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            // 'course_id' => 'required|exists:courses,id',
-            //  'week_id' => 'required|exists:weeks,id',
             'course_id' => ['required', 'exists:courses,id', Rule::unique('resources')->where(function ($query) use ($request) {
                 return $query->where('course_id', $request->input('course_id'))
                     ->where('week_id', $request->input('week_id'));

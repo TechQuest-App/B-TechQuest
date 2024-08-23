@@ -68,11 +68,6 @@ Route::controller(CertificateController::class)->middleware('auth:sanctum')->gro
     Route::get('/courseCertificate/{course_id}', 'oneCertificate'); // for student
     Route::get('/certificates', 'allCertificates');
 });
-//Route::get('/certificate/fullName', [CertificateFullNameController::class,'fullName']);
-//Route::middleware('auth:sanctum')->controller(certificateController::class)->group(function () {
-//    Route::get('/certificate','index');
-//    Route::post('/wishlist', 'store');
-//});
 
 ## ---------------------Section Module ------------------##
 Route::controller(SectionController::class)->middleware('auth:sanctum')->group(function () {

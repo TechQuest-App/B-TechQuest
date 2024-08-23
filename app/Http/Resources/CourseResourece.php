@@ -21,6 +21,7 @@ class CourseResourece extends JsonResource
             'course-price' => $this->price,
             'course-rate' => $this->rate,
             'course-duration' => $this->length,
+            'course-mentor' => $this->mentor->f_name . ' ' . $this->mentor->l_name,
 //            'category' => new CategoryResource($this->category), // entire object with our resource
 //            'category' => $this-> category,    // object without resource
             'category' => $this-> category-> name,
